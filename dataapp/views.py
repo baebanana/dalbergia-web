@@ -28,12 +28,12 @@ def admin_required(view_func):
         return view_func(request, *args, **kwargs)
     return _wrapped_view
 def index(request):
-    return render(request,"dataapp\homepage.html")
+    return render(request,"dataapp/homepage.html")
 
 def home(request):
     knowledge_info = KnowledgeInfo.objects.all().order_by("info_creator")
 
-    return render(request,"dataapp\homepage.html",
+    return render(request,"dataapp/homepage.html",
         {
             "knowledge": knowledge_info
         }
