@@ -18,6 +18,8 @@ from tensorflow.keras.applications.vgg16 import preprocess_input
 from PIL import Image as PILImage
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
+from .models import KnowledgeInfo, Species, Genus
+
 # --- ส่วนที่ 1: โหลดโมเดลไว้ที่ระดับ Global ---
 # ระบุตำแหน่งไฟล์ให้ถูกต้องตามโครงสร้างที่สร้างไว้
 
@@ -31,13 +33,16 @@ def index(request):
     return render(request,"dataapp/homepage.html")
 
 def home(request):
-    knowledge_info = KnowledgeInfo.objects.all().order_by("info_creator")
+    knowledge_info = KnowledgeInfo.objects.all()
+    species = Species.objects.all()
+    genus = Genus.objects.all()
 
-    return render(request,"dataapp/homepage.html",
-        {
-            "knowledge": knowledge_info
-        }
-    )
+    return render(request,"dataapp/homepage.html",{
+        "knowledge": knowledge_info,
+        "species": species,
+        "genus": genus,
+    })
+
 
 #@admin_required
 def managedata(request):
